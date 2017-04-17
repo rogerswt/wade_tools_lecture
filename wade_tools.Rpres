@@ -1,0 +1,269 @@
+
+========================================================
+css: rogers_rpres.css
+<topic>Intro to Wade's </topic>
+<topic>flow cytometry toolbox</topic>
+<hr>
+<lecture>2</lecture>
+
+Setting up an R Project for tools
+========================================================
+
+Please be sure that you have the latest toolbox snapshot:
+<https://github.com/rogerswt/tools>.
+
+- You've probably already cloned this project into your ~/git/R directory
+- If so, please __delete it__, and do the following:
+  - Go to the github project and copy the project URL to your clipboard
+  - In the upper right corner of RStudio, _create a new project_
+  - Select "Version Control", then "Git"
+  - Paste the URL you copied earlier
+    - Make sure that the name of the directory is "tools" and
+    - the path is "~/git"
+
+Set up so that tools are always in your environment
+========================================================
+
+- Go to the tools directory, and copy .Rprofile into your home directory
+- Quit RStudio and restart
+- You should see something like this on startup:
+
+<pre>
+commands executing from ~/.Rprofile
+Source'ing Wade's flow cytometry tools
+Loading required package: stats
+KernSmooth 2.23 loaded
+Copyright M. P. Wand 1997-2009
+Loading required package: flowViz
+Loading required package: lattice
+Warning message:
+package ‘flowCore’ was built under R version 3.2.3
+>
+</pre>
+
+<b> NOTE: you may need to go get several packages before this works correctly</b>
+
+Check out your environment
+========================================================
+
+- There are lots of functions
+- Find pplot in the list
+  - hint - the list is alphabetic
+- Click on pplot and see the code in the editor
+
+Get some example data
+========================================================
+
+- Clone my "workshop_data" github project (<https://github.com/rogerswt/workshop_data>)
+- Remember where you put it
+  - a reasonable place would be "~/git/R/workshop_data"
+
+Read in the data and examine it
+========================================================
+
+- Do this in the Console
+```{r, echo=TRUE}
+ff = read.FCS("~/git/R/workshop_data/ND 446 CMV+_unstim_004.fcs")
+ff
+```
+
+Make a plot
+========================================================
+
+```{r, echo=TRUE}
+pplot(ff, c("FSC-A","SSC-A"), tx = 'linear', ty = 'linear')
+```
+
+Make another plot (CD8 vs CD4)
+========================================================
+incremental: true
+
+```{r, echo=TRUE}
+pplot(ff, c("695/40 Green-A","790/60 Violet-A"), tx = 'linear', ty = 'linear')
+```
+
+- What's wrong with this picture?
+  - not compensated?
+  - not transformed?
+
+Try again
+========================================================
+
+```{r, echo=TRUE}
+ff = autocomp(ff)
+ff = doTransform(ff, cols = 8:23)
+pplot(ff, c("695/40 Green-A","790/60 Violet-A"))
+```
+
+Notice
+========================================================
+- Omitting 'tx' and 'ty' defaults axes to biexponential
+- The data seem to be properly compensated
+
+but:
+- The axis labeling is ugly.  Let's fix that...
+
+Pretty things up
+========================================================
+
+```{r, echo=TRUE}
+#
+# Use the description field to make nice names
+#
+niceNames = function(ff) {
+  des = parameters(ff)$desc
+  idx = which(!is.na(des))
+
+  colnames(ff)[idx] = des[idx]
+
+  ff
+}
+```
+
+```{r}
+ff2 = niceNames(ff)
+ff2
+```
+
+pplot ff2 and see what happens!
+========================================================
+
+```{r, echo=TRUE}
+pplot(ff2, c("CD4","CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+```
+
+Let's try to identify some populations
+========================================================
+```{r, echo=TRUE}
+pplot(ff2, c("CD4","CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+bb_4 = blob.boundary(ff2, parameters = c("CD4", "CD8"),
+                     location = bx(c(4000, 0)), height = .1)
+bb_8 = blob.boundary(ff2, parameters = c("CD4", "CD8"),
+                     location = bx(c(0, 20000)), height = .1)
+bb_dn = blob.boundary(ff2, parameters = c("CD4", "CD8"),
+                      location = bx(c(0, 0)), height = .1)
+lines(bb_4, lwd = 3, col = 'dodgerblue2')
+lines(bb_8, lwd = 3, col = 'indianred2')
+lines(bb_dn, lwd = 3, col = 'black')
+```
+
+Notice a few things
+========================================================
+
+- The use of the function <code>bx()</code>
+- the <code>height</code> parameter determines how big the contour is
+  - large values of height give small contours, and vice versa
+  - play around with height
+- In general, it's hard to get stable and reproducible results with very small height
+  - instead, we can inflate a small contour by a given distance
+
+Put it all together
+========================================================
+
+```{r}
+bb_4 = inflate.contour(blob = bb_4, dist = .25)
+bb_8 = inflate.contour(blob = bb_8, dist = .25)
+bb_dn = inflate.contour(blob = bb_dn, dist = .25)
+
+# make gates from the polygons
+gate_4 = polygonGate(.gate = bb_4)
+gate_8 = polygonGate(.gate = bb_8)
+gate_dn = polygonGate(.gate = bb_dn)
+
+pplot(ff2, c("CD4","CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+lines(bb_4, lwd = 3, col = 'dodgerblue2')
+lines(bb_8, lwd = 3, col = 'indianred2')
+lines(bb_dn, lwd = 3, col = 'black')
+```
+
+And count some populations
+========================================================
+
+add some numbers
+
+```{r, echo=FALSE}
+n_cd4 = nrow(Subset(ff2, gate_4))
+n_cd8 = nrow(Subset(ff2, gate_8))
+n_dn = nrow(Subset(ff2, gate_dn))
+pplot(ff2, c("CD4","CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+lines(bb_4, lwd = 3)
+lines(bb_8, lwd = 3)
+lines(bb_dn, lwd = 3)
+n_tot = nrow(ff2)
+text(x = mean(bb_4[, 1]) + 1, y = mean(bb_4[, 2]), labels = sprintf("%.1f%%", 100 * n_cd4 / n_tot), pos = 4, cex = 2)
+text(x = mean(bb_8[, 1]), y = mean(bb_8[, 2]) + 1, labels = sprintf("%.1f%%", 100 * n_cd8 / n_tot), pos = 4, cex = 2)
+text(x = mean(bb_dn[, 1]), y = mean(bb_dn[, 2]) + 1, labels = sprintf("%.1f%%", 100 * n_dn / n_tot), pos = 4, cex = 2)
+```
+
+Here's the code for that last picture
+========================================================
+
+```{r, eval=FALSE}
+n_cd4 = nrow(Subset(ff2, gate_4))
+n_cd8 = nrow(Subset(ff2, gate_8))
+n_dn = nrow(Subset(ff2, gate_dn))
+pplot(ff2, c("CD4","CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+lines(bb_4, lwd = 3)
+lines(bb_8, lwd = 3)
+lines(bb_dn, lwd = 3)
+n_tot = nrow(ff2)
+text(x = mean(bb_4[, 1]) + 1, y = mean(bb_4[, 2]),
+     labels = sprintf("%.1f%%", 100 * n_cd4 / n_tot), pos = 4, cex = 2)
+text(x = mean(bb_8[, 1]), y = mean(bb_8[, 2]) + 1,
+     labels = sprintf("%.1f%%", 100 * n_cd8 / n_tot), pos = 4, cex = 2)
+text(x = mean(bb_dn[, 1]), y = mean(bb_dn[, 2]) + 1,
+     labels = sprintf("%.1f%%", 100 * n_dn / n_tot), pos = 4, cex = 2)
+```
+
+If blobs aren't the right tool, we could try quadrants
+========================================================
+
+```{r}
+thresh_cd4 = ibx(deGate(ff2,channel = "CD4"))
+thresh_cd8 = ibx(deGate(ff2,channel = "CD8"))
+pplot(ff2, c("CD4", "CD8"), xlim = c(-1, 5), ylim = c(-1, 5))
+xline(bx(thresh_cd4), lwd = 3)
+yline(bx(thresh_cd8), lwd = 3)
+qg = quadGate(filterId="quad", "CD4" = bx(thresh_cd4), "CD8" = bx(thresh_cd8))
+sapply(split(ff2, qg), FUN = function(x){nrow(x)}) / n_tot
+```
+
+Of course, we should have gated on CD3+ and DUMP- in the first place
+========================================================
+
+```{r}
+pplot(ff2, c("DUMP", "CD3"), xlim = c(-1, 5), ylim = c(-1, 5))
+thresh_cd3 = ibx(deGate(f = ff2, channel = "CD3"))
+thresh_dump = ibx(deGate(f = ff2, channel = "DUMP"))
+xline(bx(thresh_dump), lwd = 3)
+yline(bx(thresh_cd3), lwd = 3)
+qg_tcell = quadGate(filterId="tcell", "DUMP" = bx(thresh_dump), "CD3" = bx(thresh_cd3))
+tcell = split(ff2, qg_tcell)$`DUMP-CD3+`
+n_tcell = nrow(tcell)
+```
+
+Gating on T cells gives saner results
+========================================================
+
+```{r, out.width='800px', out.height='400px'}
+par(mfrow = c(1, 2))
+pplot(ff2, c("CD4", "CD8"), xlim = c(-1, 5), ylim = c(-1, 5), main = "Ungated")
+xline(bx(thresh_cd4), lwd = 3)
+yline(bx(thresh_cd8), lwd = 3)
+
+thresh_cd4 = ibx(deGate(tcell,channel = "CD4"))
+thresh_cd8 = ibx(deGate(tcell,channel = "CD8"))
+pplot(tcell, c("CD4", "CD8"), xlim = c(-1, 5), ylim = c(-1, 5), main = "Gated T cells")
+xline(bx(thresh_cd4), lwd = 3)
+yline(bx(thresh_cd8), lwd = 3)
+```
+And the numbers
+========================================================
+
+```{r}
+qg2 = quadGate(filterId="quad", "CD4" = bx(thresh_cd4), "CD8" = bx(thresh_cd8))
+sapply(split(ff2, qg), FUN = function(x){nrow(x)}) / n_tot
+sapply(split(tcell, qg2), FUN = function(x){nrow(x)}) / n_tcell
+```
+
+

@@ -1,0 +1,421 @@
+.reveal {
+	color: #032F4C;
+	font-size: 28pt;
+	}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	font-size: 32pt;
+	padding-top:0;
+   margin-bottom: 12pt;
+   color: #774302;
+}
+
+.reveal h3:before {
+	position: relative;
+	display:block;
+	content: "CYTOMICS WORKSHOP - Spring 2017  ";
+	font-weight: bold;
+	text-align: right;
+	background: #fff;
+	right:0;
+	top:0;
+	height: 16pt;
+	font-size: 12pt;
+	color: #bbb;
+	margin: 0;
+}
+
+
+.reveal p,
+.reveal table {
+   margin-bottom: 18pt;
+}
+
+.reveal li {
+   margin-bottom: 12pt;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+	margin-top: 12pt;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal small {
+	font-size: 20pt;
+}
+
+.reveal smaller {
+	font-size: 12pt;
+}
+
+.reveal smallest {
+	font-size: 6pt;
+}
+
+.reveal pre {
+  margin-top: 0;
+  max-width: 95%;
+  font-size: 12pt;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  margin-bottom: 1em;
+}
+
+.reveal pre code {
+  display: block; padding: 0.5em;
+  line-height: 20pt;
+  background-color: white;
+  overflow: visible;
+  max-height: none;
+  word-wrap: normal;
+}
+
+.reveal code {
+  overflow: visible;
+  max-height: none;
+}
+
+.reveal code.r {
+  background-color: #F8F8F8;
+  font-size: 14pt;
+}
+
+.reveal code.cpp {
+  background-color: #F8F8F8;
+}
+
+.reveal section del {
+   text-decoration: none;
+   color: #AAB1BA;
+}
+
+.reveal section img {
+   border: none;
+}
+
+.reveal section .fieldError {
+  margin-bottom: 12pt;
+}
+
+.reveal section .fieldError span {
+  color: red;
+}
+
+.chapter .reveal .state-background {
+   background: white;
+}
+
+.chapter .reveal h3 {
+  	width: 50%;
+  	height: 50%;
+  	overflow: auto;
+  	margin: auto;
+  	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	bottom: 0;
+ 	right: 0;
+   color: #032F4C;
+   font-size: 48pt;
+   font-weight: bold;
+	width:100%;
+}
+.chapter .reveal h3:before {
+	content: "";
+}
+
+.section .reveal .state-background {
+   background: #ffffff;
+}
+
+.section .reveal topic {
+	margin-top: 10%;
+   float: right;
+   color: #032F4C;
+   font-size: 2.5em;
+   font-weight: bold;
+   margin-bottom: 0.4em;
+}
+
+.section .reveal lecture:before {
+ 	content: "CYTOMICS WORKSHOP - Lecture ";
+}
+
+.section .reveal lecture {
+	position: absolute;
+	right: 0;
+   color: #0A4B75;
+   font-size: 1.4em;
+   font-weight: bold;
+   padding-bottom: 0.4em;
+	margin-bottom: 0.4em;
+}
+
+.section .reveal lecture:after {
+	position: absolute;
+	right: 0;
+	display:block;
+	padding-top: 1em;
+	font-size: 0.5em;
+ 	content: "Spring 2017 - Wade Rogers";
+ 	color: #888;
+}
+
+.section .reveal lecture {
+   float: right;
+   color: #0A4B75;
+   font-size: 1.4em;
+   font-weight: bold;
+   margin-bottom: 0.4em;
+}
+
+.section .reveal hr {
+   width: 100%;
+   background: #774302;
+   clear: both;
+   height: 6px;
+   border: none;
+}
+
+.section .reveal h1,
+.section .reveal h2,
+.section .reveal p {
+   color: #032F4C;
+   margin-top: 0;
+
+}
+
+.sub-section .reveal .state-background {
+  background: #E7E8EA;
+
+}
+
+.sub-section .reveal h2,
+.sub-section .reveal p {
+  color: #63717B;
+  margin-top: 0px;
+}
+
+.reveal g {
+  color: #999999;
+}
+
+
+.reveal strong {
+  color: #25679E;
+}
+
+.reveal .controls {
+  right: -20px;
+  bottom: 5px;
+}
+
+.reveal .controls div.navigate-left {
+  top: 75px;
+}
+
+.reveal .controls div.navigate-right {
+  left: 54px;
+  top: 75px;
+}
+
+
+.reveal .controls div.navigate-up {
+  display: none;
+}
+
+.reveal .controls div.navigate-down {
+  display: none;
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+
+.reveal .controls div.navigate-left,
+.reveal .controls div.navigate-left.enabled {
+  border-right-color: #25679E;
+}
+
+.reveal .controls div.navigate-right,
+.reveal .controls div.navigate-right.enabled {
+  border-left-color: #25679E;
+}
+
+.reveal .controls div.navigate-up,
+.reveal .controls div.navigate-up.enabled {
+  border-bottom-color: #25679E;
+}
+
+.reveal .controls div.navigate-down,
+.reveal .controls div.navigate-down.enabled {
+  border-top-color: #25679E;
+}
+
+.reveal .controls div.navigate-left.enabled:hover {
+  border-right-color: #267EC8;
+}
+
+.reveal .controls div.navigate-right.enabled:hover {
+  border-left-color: #267EC8;
+}
+
+.reveal .controls div.navigate-up.enabled:hover {
+  border-bottom-color: #267EC8;
+}
+
+.reveal .controls div.navigate-down.enabled:hover {
+  border-top-color: #267EC8;
+}
+
+.reveal .progress span {
+  background: #25679E;
+}
+
+.reveal .slides>section,
+.reveal .slides>section>section {
+  padding: 0px 0px;
+}
+
+
+.reveal table {
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: none;
+  border-color: gray;
+  border-collapse: collapse;
+  font-size: 0.7em;
+}
+
+.reveal table th {
+  border-width: 1px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-weight: bold;
+  border-style: none;
+  border-color: gray;
+}
+
+.reveal table td {
+  border-width: 1px;
+  padding-left: 10px;
+  padding-right: 25px;
+  border-style: none;
+  border-color: gray;
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 5px auto;
+  padding: 5px;
+
+  font-style: normal;
+  background: #C6D7DC;
+  border: 1px solid #C6D7DC;
+  box-shadow: none;
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: block;
+}
+
+.reveal blockquote:before {
+  content: '';
+}
+
+.reveal blockquote:after {
+    content: '';
+}
+
+
+.reveal ol,
+.reveal ul {
+	margin: 0 0 .5em 1.2em;
+}
+
+.reveal .slides section {
+   height: 100%;
+}
+
+.reveal .slides section .slideContent h2 {
+   font-size: 1.3em;
+   font-weight: bold;
+}
+
+.reveal .slides section .slideContent h3 {
+   font-size: 1.3em;
+   font-weight: bold;
+}
+
+.reveal .slides section .column {
+   position: fixed;
+   width: 48%;
+   top: 2.5em;
+   bottom: 0;
+}
+
+.reveal .slides section .column1 {
+   left: 0;
+}
+
+.reveal .slides section .column2 {
+   right: 0;
+}
+
+.reveal .slides section .column img {
+   max-width: 95%;
+   max-height: 95%;
+   height: auto;
+}
+
+.reveal .slides section .mediaOnly {
+   position: fixed;
+   width: 100%;
+   top: 2.5em;
+   bottom: 0;
+}
+
+.reveal .slides section .mediaOnly img {
+   max-width: 90%;
+   max-height: 90%;
+   height: auto;
+}
+
+.reveal .slides section .mediaInline img {
+   max-width: 90%;
+   max-height: 50%;
+   width: auto;
+   margin-left: 1.4em;
+   margin-bottom: 6pt;
+}
+
+.reveal .slides section .mediaOnly video {
+   height: 90%;
+   width: 90%;
+}
+
+.reveal .slides section .mediaInline video {
+   height: 50%;
+   width: 90%;
+}
+
+.reveal .slides section .noTitle {
+   top: 0;
+}
+
+
+
