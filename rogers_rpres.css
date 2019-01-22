@@ -18,7 +18,7 @@
 .reveal h3:before {
 	position: relative;
 	display:block;
-	content: "CYTOMICS WORKSHOP - Spring 2017  ";
+	content: "PENN CYTOMICS WORKSHOP - Winter/Spring 2019  ";
 	font-weight: bold;
 	text-align: right;
 	background: #fff;
@@ -168,7 +168,7 @@
 	display:block;
 	padding-top: 1em;
 	font-size: 0.5em;
- 	content: "Spring 2017 - Wade Rogers";
+ 	content: "Winter/Spring 2019 - Wade Rogers";
  	color: #888;
 }
 
