@@ -6,42 +6,70 @@ css: rogers_rpres.css
 <hr>
 <lecture>2</lecture>
 
-Setting up an R Project for tools
+What is this toolbox?
+========================================================
+
+It's a loose collection of functions I've written over the years
+
+  - Some (e.g. blob.boundary(), biexp()) perform analysis functionality
+  - Some (e.g. pplot(), view.bivariates()) provide visualization methods
+  - Some (e.g. autocomp()) are convenience functions that make flowCore functionality
+a little more convenient
+  - Some (e.g. close.contour(), kernel_function()) aren't meant to be called by the
+user, but exist for code modularity or reuse
+
+It probably should be a 'utility' package, but that takes a little effort
+  - you should yell at me for not doing it!
+
+Getting a copy of the tools
 ========================================================
 
 Please be sure that you have the latest toolbox snapshot:
 <https://github.com/rogerswt/tools>.
 
-- You've probably already cloned this project into your ~/git/R directory
-- If so, please __delete it__, and do the following:
-  - Go to the github project and copy the project URL to your clipboard
-  - In the upper right corner of RStudio, _create a new project_
-  - Select "Version Control", then "Git"
-  - Paste the URL you copied earlier
-    - Make sure that the name of the directory is "tools" and
-    - the path is "~/git"
+If you've already cloned this project into your ~/git/R directory, that's fine!
+
+If not, you can either
+- Use git on the command line to clone the toolbox
+
+Or
+- Create an Rstudio project using the toolbox URL
+- The only difference between the two methods is that the command-line way
+will not result in a new 'project' in Rstudio, but the tools will still be available
+to you
+- Either way, make a note of the location in your filesystem of the new 'tools' directory
 
 Set up so that tools are always in your environment
 ========================================================
 
-- Go to the tools directory, and copy .Rprofile into your home directory
+- Go to the tools directory, and copy .Rprofile into your <b>home directory</b>
+- Edit your new .Rprofile so that your FLOW_TOOLS_BASE variable points to the
+location of your cloned toolbox <b>(note the trailing '/'!!!)</b>
 - Quit RStudio and restart
 - You should see something like this on startup:
 
 <pre>
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+...
 commands executing from ~/.Rprofile
+...
 Source'ing Wade's flow cytometry tools
-Loading required package: stats
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-Loading required package: flowViz
-Loading required package: lattice
-Warning message:
-package ‘flowCore’ was built under R version 3.2.3
 >
 </pre>
 
-<b> NOTE: you may need to go get several packages before this works correctly</b>
+Some packages you may need to get before it all works
+======================================================
+
+    ...       |    ...
+--------------|-------------
+    testthat  |    spam
+    flowCore  |    grid
+    flowViz   |    wmtsa
+    splancs   |    splus2R
+    sp        |    ifultools
+    fields    |    MASS
 
 Check out your environment
 ========================================================
@@ -50,6 +78,13 @@ Check out your environment
 - Find pplot in the list
   - hint - the list is alphabetic
 - Click on pplot and see the code in the editor
+
+Since it's not a package, Help isn't available (bad me!)
+========================================================
+
+However, all's not lost.
+- The Rstudio editor or console will help you with arguments
+- Comments in the code (or the code itself) will tell you what's going on
 
 Get some example data
 ========================================================
