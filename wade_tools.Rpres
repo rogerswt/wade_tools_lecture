@@ -11,12 +11,14 @@ What is this toolbox?
 
 It's a loose collection of functions I've written over the years
 
-  - Some (e.g. blob.boundary(), biexp()) perform analysis functionality
-  - Some (e.g. pplot(), view.bivariates()) provide visualization methods
-  - Some (e.g. autocomp()) are convenience functions that make flowCore functionality
-a little more convenient
-  - Some (e.g. close.contour(), kernel_function()) aren't meant to be called by the
-user, but exist for code modularity or reuse
+  - Some (e.g. <b>blob.boundary, biexp</b>) perform analysis functionality
+  - Some (e.g. <b>pplot, view.bivariates</b>) provide visualization methods
+  - Some (e.g. <b>autocomp</b>) are methods that make flowCore functionality
+  a little more convenient
+  - Some (e.g. <b>bx, ibx</b>) are shorthand for functions with longer names,
+    to make code easier to type and read
+  - Some (e.g. <b>close.contour, kernel_function</b>) aren't meant to be called
+  by the user, but exist for code modularity or reuse
 
 It probably should be a 'utility' package, but that takes a little effort
   - you should yell at me for not doing it!
@@ -300,5 +302,22 @@ qg2 = quadGate(filterId="quad", "CD4" = bx(thresh_cd4), "CD8" = bx(thresh_cd8))
 sapply(split(ff2, qg), FUN = function(x){nrow(x)}) / n_tot
 sapply(split(tcell, qg2), FUN = function(x){nrow(x)}) / n_tcell
 ```
+
+What's next?
+========================================================
+
+Up to now, we've only been talking about how to automate the same kind of sequential
+gating analysis you might do manually in Flowjo
+- But it's even more cumbersome than Flowjo, so why bother???
+    - <b>Reason #1:</b> You can do it on 100's, 1000's, ... of samples
+    - <b>Reason #2:</b> You can repeat it exactly (or tell someone else how) = reproducible research
+    - <b>Reason #3:</b> It can be the precursor to downstream gate-less analyses
+        - Gating for cleanup (singlets, live cells, etc)
+        - Datamining on only the good stuff
+
+In upcoming sessions we'll talk about some of these strategies
+
+
+
 
 
